@@ -1,0 +1,261 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto importante</title>
+    <style>
+        body {
+            background-color: #ffccd5;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 400px; 
+            height: 250px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .button-container {
+            width: 100%;
+            height: 100px;
+            position: relative; /* Permite posicionar os botões dentro da área branca */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .button-container button {
+            background-color: #ff8c94; /* Cor rosa original */
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: absolute;
+        }
+        .button-container button:hover {
+            background-color: #ff6b7a;
+        }
+        h2 {
+            margin-bottom: 20px; /* Espaço entre o título e os botões */
+            font-size: 24px;
+        }
+        .yes {
+            background-color: lightgreen;
+        }
+        .no {
+            background-color: lightcoral;
+        }
+        .letter-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1170px;  /* Aumento de 30% na largura */
+            height: 650px;  /* Aumento de 30% na altura */
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .envelope {
+            width: 70%;
+            height: 450px;
+            background-color: #ffcccb;
+            position: relative;
+            border-radius: 0 0 20px 20px; /* Borda arredondada na parte inferior */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave para mais realismo */
+            transform-origin: top; /* Ponto de origem de transformação para o topo */
+            transition: transform 0.8s ease-out; /* Transição suave ao abrir o envelope */
+        }
+        .flap {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            width: 120%;
+            height: 100px;
+            background-color: #ff8c94;
+            border-radius: 50% 50% 0 0;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform: translateX(-50%) rotateX(0deg); /* Começando fechado */
+            transition: transform 1.2s ease-out; /* Animação de transformação */
+        }
+        .message {
+            width: 80%;
+            height: 360px;
+            background: white;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%); /* Inicialmente fora da tela */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 22px;
+            font-weight: bold;
+            color: #d6336c;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: left;
+            opacity: 0; /* Começa invisível */
+            transform-origin: bottom; /* Define o ponto de origem de transformação para a base da carta */
+            transition: opacity 1s ease-in-out, transform 1s ease-out; /* Transições mais lentas para dar mais ênfase */
+        }
+        .open .flap {
+            transform: translateX(-50%) rotateX(180deg); /* Aba virando para baixo */
+        }
+        .open .message {
+            opacity: 1; /* Carta ficando visível */
+            transform: translateX(-50%) translateY(0); /* Carta se movendo para dentro do envelope */
+            animation: moveCard 1s ease-out forwards; /* Animação para mover a carta para fora */
+        }
+        @keyframes moveCard {
+            0% {
+                transform: translateX(-50%) translateY(100%); /* Começa fora da tela */
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(-50%) translateY(-30%); /* A carta sobe ligeiramente */
+                opacity: 0.6; /* A carta começa a aparecer parcialmente */
+            }
+            100% {
+                transform: translateX(-50%) translateY(0); /* A carta se move para sua posição final */
+                opacity: 1; /* A carta fica completamente visível */
+            }
+        }
+        .text-container {
+            width: 50%;
+        }
+        .image-container {
+            margin-left: 20px;
+            width: 50%;  /* Ajuste da largura da imagem */
+            text-align: left;
+        }
+        .image-container img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <h2>Você quer ser meu momo pa semple? 💖</h2>
+        <div class="button-container" id="buttons">
+            <button class="yes" onclick="showLetter()">Sim</button>
+            <button class="no" onclick="duplicateYes()">Não</button>
+        </div>
+    </div>
+
+    <div class="letter-container" id="letter" style="display: none;">
+        <div class="envelope">
+            <div class="flap"></div>
+            <div class="message">
+                <div class="text-container">
+                    <p>Te amo para sempre! 💕</p>
+                    <p>Você é uma das pessoas mais fortes que conheço! Você mostra para o mundo todos os dias do que é capaz. 
+                        Sei que não sou a melhor pessoa do mundo para escutar, mas você sempre vai ter um ombro para chorar!
+                        Nunca esqueça que estou aqui!
+                        Agora aproveita a nossa musiquinha ➔
+                    </p>
+                </div>
+                <div class="image-container">
+                    <img src="gatinhos.jpg">
+                    <br>
+                    <a href="https://www.youtube.com/watch?v=i9UDD6zyCGs" target="_blank">
+                        <button class="youtube-button">🎵 💖 Nossa Música 💖 🎵</button>
+                    </a>
+                </div>
+                <style>
+                    .youtube-button {
+                        background-color: #ff4b5c;
+                        color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                        margin-top: 30px;
+                        margin-left: 40px;
+                    }
+                
+                    .youtube-button:hover {
+                        background-color: #d6336c;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLetter() {
+            let letter = document.getElementById("letter");
+            let mainContainer = document.getElementById("main-container");
+
+            mainContainer.style.display = "none";
+            letter.style.display = "flex";
+
+            setTimeout(() => {
+                letter.classList.add("open");
+            }, 100);
+        }
+
+        function duplicateYes() {
+            let buttonContainer = document.getElementById("buttons");
+
+            // Pegando dimensões do container branco
+            let container = document.querySelector(".button-container");
+            let containerWidth = container.clientWidth;
+            let containerHeight = container.clientHeight;
+
+            for (let i = 0; i < 2; i++) {
+                let newYesButton = document.createElement("button");
+                newYesButton.innerText = "Sim";
+                newYesButton.classList.add("yes");
+                newYesButton.onclick = showLetter;
+                newYesButton.style.backgroundColor = "#ff8c94";
+
+                // Definir posição dentro do container
+                let maxX = containerWidth - 80; // Ajuste para não sair da borda
+                let maxY = containerHeight - 40;
+                let randomX = Math.random() * maxX;
+                let randomY = Math.random() * maxY;
+
+                newYesButton.style.position = "absolute";
+                newYesButton.style.left = `${randomX}px`;
+                newYesButton.style.top = `${randomY}px`;
+
+                buttonContainer.appendChild(newYesButton);
+            }
+        }
+    </script>
+
+</body>
+</html>
